@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import * as faceapi from "face-api.js";
+import { Camera } from "react-camera-pro";
+
 import CharacterChat from "./CharacterChat";
 
 const classes = ["Corlys", "Daemon", "Rhaenyra"];
@@ -63,6 +65,8 @@ type Face = {
 export default function Index() {
   const imageRef = useRef(null);
   const [faces, setFaces] = useState<Face[]>([]);
+  const camera = useRef(null);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     (async function run() {
@@ -99,7 +103,28 @@ export default function Index() {
 
   return (
     <div>
-      <div className="relative">
+      <div>
+        <Camera
+          ref={camera}
+          errorMessages={{ noCameraAccessible: "No camera found" }}
+        >
+          <img src={image} alt="Image preview" />
+          <button
+            onClick={() => {
+              const photo = camera.current.takePhoto();
+              setImage(photo);
+            }}
+          />
+          <button
+            hidden={numberOfCameras <= 1}
+            onClick={() => {
+              camera.current.switchCamera();
+            }}
+          />
+        </Camera>
+      </div>
+
+      <div className="relative hidden">
         <img
           ref={imageRef}
           src="/bbt3.jpg"
