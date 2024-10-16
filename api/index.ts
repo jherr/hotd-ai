@@ -1,5 +1,5 @@
 import { eventHandler, getRequestURL, readBody } from "vinxi/http";
-import { streamText, CoreMessage } from "ai";
+import { streamText, CoreMessage, convertToCoreMessages } from "ai";
 import { openai } from "@ai-sdk/openai";
 
 import { locations, characters, episodes } from "./episodes";
@@ -28,10 +28,7 @@ export default eventHandler(async (event) => {
   const info = getRequestURL(event);
   if (info.pathname.startsWith("/api/chat")) {
     const body = await readBody(event);
-    const {
-      messages,
-      character,
-    }: { messages: CoreMessage[]; character: string } = body;
+    const { messages, character }: { messages: any; character: string } = body;
 
     const completeContext = `You are ${character}, a character in George. R.R. Martin's Game of Thrones universe.
 Your name is ${character} and you answer questions about yourself, as well as other characters, locations and events in the voice of ${character}.
@@ -41,7 +38,7 @@ ${systemContext}
 `;
     const result = await streamText({
       model: openai("gpt-4o"),
-      messages: messages,
+      messages: convertToCoreMessages(messages),
       system: completeContext,
     });
 
