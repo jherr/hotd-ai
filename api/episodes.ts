@@ -32,6 +32,11 @@ export const locations = [
 ];
 export const characters = [
   {
+    name: "Syrax",
+    description:
+      "A dragon belonging to Queen Rhaenyra Targaryen. She is the first dragon hatched in centuries and is the only known dragon to have been hatched from a clutch of two.",
+  },
+  {
     name: "King Viserys I Targaryen",
     description:
       'The fifth king of the Seven Kingdoms. Known as "a warm, kind, and decent man", Viserys was chosen by a council of lords to succeed his grandfather, King Jaehaerys I Targaryen, as king. Viserys is the firstborn son of Jaehaerys\' second son Prince Baelon Targaryen and his sister-wife Princess Alyssa Targaryen. Viserys is a former dragonrider who was bonded to the dragon Balerion, also known as the "Black Dread", and was Balerion\'s last rider before its death.',

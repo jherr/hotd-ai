@@ -41,6 +41,15 @@ export default function CharacterChat({
                 {m.content}
               </div>
             </div>
+          ) : m.toolInvocations ? (
+            <div key={m.id} className="whitespace-pre-wrap flex gap-2 italic">
+              {m.toolInvocations.map((toolInvocation, index) => (
+                <div key={index}>
+                  {toolInvocation.toolName}:{" "}
+                  {JSON.stringify(toolInvocation.args)}
+                </div>
+              ))}
+            </div>
           ) : (
             <div key={m.id} className="whitespace-pre-wrap flex gap-2 italic">
               <div

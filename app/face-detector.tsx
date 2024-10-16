@@ -1,15 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import * as faceapi from "face-api.js";
-import Camera from "./Camera";
 
+import Camera from "./camera";
 import { faceDetectorOptions, faceMatcherPromise } from "./detector";
 
-import CharacterChat from "./CharacterChat";
+import CharacterChat from "./camera-chat";
 
 const names = {
-  Corlys: "Lord Corlys Velaryon",
-  Daemon: "King Consort Daemon Targaryen",
-  Rhaenyra: "Queen Rhaenyra Targaryen",
+  Corlys: "Corlys Velaryon",
+  Daemon: "Daemon Targaryen",
+  Rhaenyra: "Rhaenyra Targaryen",
 };
 
 type Face = {
@@ -27,7 +27,7 @@ type Face = {
 export default function Index() {
   const imageRef = useRef(null);
   const [faces, setFaces] = useState<Face[]>([]);
-  const [showCamera, setShowCamera] = useState(true);
+  const [showCamera, setShowCamera] = useState(false);
   const [image, setImage] = useState("/bbt3.jpg");
 
   useEffect(() => {
@@ -75,38 +75,48 @@ export default function Index() {
           }}
         />
       )}
-
-      <div className="relative">
-        <img
-          ref={imageRef}
-          src={image}
-          className="w-full aspect-w-16 aspect-h-9 border-2"
-        />
-        {faces.map((face) => (
-          <div
-            key={face.label}
-            className="absolute text-center text-3xl font-bold"
-            style={{
-              top: `${face.top * 100}%`,
-              left: `${(face.center - 0.16) * 100}%`,
-              width: `33%`,
-            }}
-          >
-            {names[face.label]}
+      {!showCamera && (
+        <>
+          <div className="relative">
+            <img
+              ref={imageRef}
+              src={image}
+              className="w-full aspect-w-16 aspect-h-9 border-2"
+              alt="Game of Thrones image"
+            />
+            {faces.map((face) => (
+              <div
+                key={face.label}
+                className="absolute text-center text-3xl font-bold"
+                style={{
+                  top: `${face.top * 100}%`,
+                  left: `${(face.center - 0.16) * 100}%`,
+                  width: `33%`,
+                }}
+              >
+                {names[face.label]}
+              </div>
+            ))}
+            <button
+              onClick={() => setShowCamera(true)}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-2 absolute bottom-[10px] right-[10px]"
+            >
+              Take New Photo
+            </button>
           </div>
-        ))}
-      </div>
-      {faces.map((face) => (
-        <CharacterChat
-          key={face.label}
-          character={names[face.label]}
-          image={face.image}
-          width={face.width}
-          height={face.height}
-          imageTop={face.imageTop}
-          imageLeft={face.imageLeft}
-        />
-      ))}
+          {faces.map((face) => (
+            <CharacterChat
+              key={face.label}
+              character={names[face.label]}
+              image={face.image}
+              width={face.width}
+              height={face.height}
+              imageTop={face.imageTop}
+              imageLeft={face.imageLeft}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 }

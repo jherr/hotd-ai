@@ -1,6 +1,7 @@
 /// <reference types="vinxi/types/client" />
 import ReactDOM from "react-dom/client";
-import FaceDetector from "./FaceDetector";
+
+import FaceDetector from "./face-detector";
 
 import "./style.css";
 

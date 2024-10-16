@@ -84,6 +84,7 @@ export default function Camera({
           ></div>
         )}
         <button
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-2 absolute bottom-[10px] right-[10px]"
           onClick={() => {
             if (videoElement.current) {
               videoElement.current.pause();
