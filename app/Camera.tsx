@@ -51,7 +51,14 @@ export default function Camera({
     if (videoElement.current) {
       (async function run() {
         await faceMatcherPromise;
-        const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        // Hard code to the OBS virtual camera
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            deviceId:
+              "27e4f669183fb2299f66085bac55423a6df387824942fb2a6edb08892f1cb4c2",
+          },
+        });
         videoElement.current.srcObject = stream;
       })();
     }

@@ -4,7 +4,7 @@ import * as faceapi from "face-api.js";
 import Camera from "./camera";
 import { faceDetectorOptions, faceMatcherPromise } from "./detector";
 
-import CharacterChat from "./camera-chat";
+import CharacterChat from "./character-chat";
 
 const names = {
   Corlys: "Corlys Velaryon",
@@ -39,6 +39,8 @@ export default function Index() {
           .detectAllFaces(imageRef.current, faceDetectorOptions)
           .withFaceLandmarks()
           .withFaceDescriptors();
+
+        console.log(results);
 
         const faces: Face[] = [];
         results.forEach(({ detection, descriptor }) => {
